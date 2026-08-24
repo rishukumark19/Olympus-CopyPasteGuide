@@ -138,4 +138,48 @@ Files written:
 
 Then print the full content of problem.md for visual verification.
 
-DO NOT produce solution.patch. This session ends after tests are verified to fail on base.
+### Docker Verification (Phase 1 — run immediately after writing files)
+
+After writing all files, use your shell/terminal to run the Docker verification matrix. Do NOT skip this. Execute every command directly in your shell tool.
+
+```bash
+# From the repo root (parent of the challenge folder):
+HASH=$(cat challenge/<slug>/commit.txt)
+git stash
+git checkout $HASH
+git apply challenge/<slug>/test.patch
+
+# Build and run — try Docker first; if unavailable, run ./test.sh natively
+docker build -t challenge-verify .
+docker run --rm --network none challenge-verify ./test.sh --output_path /tmp/base1.xml base
+echo "PHASE1_BASE_EXIT=$?"
+docker run --rm --network none challenge-verify ./test.sh --output_path /tmp/new1.xml new
+echo "PHASE1_NEW_EXIT=$?"
+
+git stash pop
+```
+
+Expected results:
+- PHASE1_BASE_EXIT=0   → upstream tests pass (no regressions)
+- PHASE1_NEW_EXIT≠0   → challenge tests fail correctly (no solution yet)
+
+Report this before finishing:
+
+PHASE1_BASE: <PASS | FAIL (exit code N)>
+  git apply result: <"OK" | "FAILED — error: <exact error>">
+  Failing tests (if any): <list or "none">
+  Root cause: <"patch corrupt/conflict" | "upstream test broken" | "docker error" | "none">
+
+PHASE1_NEW: <FAIL (exit≠0) = CORRECT | PASS (exit=0) = BROKEN>
+  Failing tests: <list — these are expected to fail>
+
+RESULT: <PASS | FAIL>
+
+If RESULT is FAIL:
+- PHASE1_BASE FAIL + git apply error → test.patch is corrupt. Fix it before proceeding.
+- PHASE1_BASE FAIL + git apply OK → a test broke an upstream test. Identify and fix.
+- PHASE1_NEW PASS → challenge tests pass without a solution. Fix tests before proceeding.
+If RESULT is PASS → proceed to Step 03B (problem description audit) in the same or new chat.
+
+DO NOT produce solution.patch. This session ends after Docker verification passes.
+

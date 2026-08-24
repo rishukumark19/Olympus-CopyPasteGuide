@@ -30,19 +30,9 @@ One file per step. Open it, paste into your LLM, read the output, act on it.
 
 1. Open a new LLM chat (use your best model — Gemini/Claude/GPT)
 2. Paste `1_Build/03A_Build/PROMPT.md` with your seed and repo details
-3. The LLM will: automatically clone the repo & checkout commit → check for PR overlap → write `problem.md` → write `test.patch` → write `Dockerfile`
-4. It creates a `challenge/<slug>/` folder with all files
-
-**After Session 3 ends — run Docker yourself:**
-```bash
-git checkout <COMMIT_HASH>
-git apply challenge/<slug>/test.patch
-docker build -t challenge-test .
-docker run --rm --network none challenge-test ./test.sh --output_path /tmp/base.xml base   # MUST exit 0
-docker run --rm --network none challenge-test ./test.sh --output_path /tmp/new.xml new    # MUST exit non-zero
-```
-If base fails or new passes → the LLM made a mistake. Tell it what happened and fix it.
-If both correct → continue to Session 4.
+3. The LLM will: automatically clone the repo & checkout commit → check for PR overlap → write `problem.md` → write `test.patch` → write `Dockerfile` → **run Docker verification automatically**
+4. If Docker RESULT is FAIL → tell the LLM what failed, it fixes and re-runs
+5. If Docker RESULT is PASS → continue to Session 4
 
 ### Session 4 — Check problem description (03B)
 
