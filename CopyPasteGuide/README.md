@@ -19,9 +19,9 @@ One file per step. Open it, paste into your LLM, read the output, act on it.
 ### Session 2 — Pick a seed (same or new chat)
 
 1. Pick one repo from Session 1 that looks good (or let the LLM take the top candidate)
-2. Paste `1_Build/02_Pick_Seed/PROMPT.md` — the LLM will automatically clone the repo locally using its terminal, checkout the pinned commit, and analyze seeds
+2. Paste `1_Build/02_Pick_Seed/PROMPT.md` — the LLM inspects PRs, issues, discussions, and architecture remotely (no local clone needed)
 3. Get back a list of seeds ranked READY / DISQUALIFIED
-4. If all DISQUALIFIED → the LLM automatically deletes the cloned repo folder → back to Session 1, try a different repo
+4. If all DISQUALIFIED → pick another candidate from Session 1 (zero cleanup needed)
 5. Note down your top READY seed — you'll use it next
 
 ### Session 3 — Build the problem + tests (03A)
@@ -29,10 +29,9 @@ One file per step. Open it, paste into your LLM, read the output, act on it.
 > This is the most important session. Take your time.
 
 1. Open a new LLM chat (use your best model — Gemini/Claude/GPT)
-2. `cd` into the cloned repo directory
-3. Paste `1_Build/03A_Build/PROMPT.md`
-4. The LLM will: check for PR overlap → write `problem.md` → write `test.patch` → write `Dockerfile`
-5. It creates a `challenge/<slug>/` folder with all files
+2. Paste `1_Build/03A_Build/PROMPT.md` with your seed and repo details
+3. The LLM will: automatically clone the repo & checkout commit → check for PR overlap → write `problem.md` → write `test.patch` → write `Dockerfile`
+4. It creates a `challenge/<slug>/` folder with all files
 
 **After Session 3 ends — run Docker yourself:**
 ```bash

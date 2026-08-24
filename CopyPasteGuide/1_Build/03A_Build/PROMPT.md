@@ -8,9 +8,12 @@ You are building a Go Olympus challenge. Execute immediately. Do not explain. Do
 [PASTE THE SEED SUMMARY FROM STEP 02 — include behavior, expansion scope, affected subsystems, and compression risk]
 
 ### Repository
-URL: (read from repo_url.txt in your current working directory)
-Commit: (read from commit.txt in your current working directory)
-Local path: (use your current working directory)
+URL: [REPO URL from Step 01/02]
+Commit: [PINNED COMMIT HASH from Step 01/02]
+
+**Automatic Clone & Checkout:** If the repository is not already cloned locally in your working directory, use your shell/terminal tool to clone it and check out the pinned commit automatically:
+`git clone <URL> && cd <repo_name> && git checkout <COMMIT>`
+Perform all subsequent build steps inside this cloned repository. Do not ask the user to clone it manually.
 
 ### Pre-Work (Do First)
 
