@@ -46,19 +46,17 @@ If both correct → continue to Session 4.
 
 ### Session 4 — Check problem description (03B)
 
-1. In the same or new chat, `cd` into `challenge/<slug>/`
-2. Paste `1_Build/03B_Check_Problem/PROMPT.md`
-3. If PASS → go to Session 5
-4. If ISSUES FOUND → fix `problem.md` in the same session, then re-run 03B
+1. Paste `1_Build/03B_Check_Problem/PROMPT.md` — the LLM auto-navigates to the challenge folder and reads `problem.md`
+2. If PASS → go to Session 5
+3. If ISSUES FOUND → fix `problem.md` in the same session, then re-run 03B
 
 ### Session 5 — Build the solution (04) ← NEW CHAT, STRICT RULE
 
 > **MUST be a brand new chat session.** The solution agent cannot have seen test.patch.
 
 1. Open a **brand new chat window** (no memory of Sessions 3-4)
-2. `cd` into `challenge/<slug>/`
-3. Paste `1_Build/04_Build_Solution/PROMPT.md`
-4. The LLM writes `solution.patch` from problem.md + repo only
+2. Paste `1_Build/04_Build_Solution/PROMPT.md` — the LLM auto-navigates to the challenge folder and reads `problem.md` + repo info
+3. The LLM writes `solution.patch` from `problem.md` + repo only
 
 **After Session 5 ends — run Docker again:**
 ```bash
@@ -67,13 +65,12 @@ docker build -t challenge-test .
 docker run --rm --network none challenge-test ./test.sh --output_path /tmp/base.xml base   # MUST exit 0
 docker run --rm --network none challenge-test ./test.sh --output_path /tmp/new.xml new    # MUST exit 0
 ```
-If new still fails → `cd challenge/<slug>` → paste `06_Fix/Docker_Matrix.md` to diagnose → fix with `Fix_Solution.md`
+If new still fails → paste `2_Review/06_Fix/4_Docker_Matrix.md` to diagnose → fix with `1_Fix_Solution.md`
 
 ### Session 6 — Full review (05) — loop up to 3 times
 
-1. `cd` into `challenge/<slug>/`
-2. Paste `2_Review/05_Review/PROMPT.md`
-3. Read the verdict:
+1. Paste `2_Review/05_Review/PROMPT.md`
+2. Read the verdict:
    - **ACCEPTED (3/3 all)** → go to Session 7
    - **REVISION REQUESTED** → fix with the relevant `06_Fix/` file → re-run Docker if T or S changed → re-run 05
    - Still failing after **3 loops** → back to Session 2, pick a different seed
@@ -81,7 +78,7 @@ If new still fails → `cd challenge/<slug>` → paste `06_Fix/Docker_Matrix.md`
 ### Session 7 — Coverage + Anti-Shortcut
 
 1. Paste `2_Review/07_Coverage/PROMPT.md` → must be CLEAN
-2. If GAPS → fix with `Fix_Tests.md` → re-run Docker → re-run 07
+2. If GAPS → fix with `2_Review/06_Fix/2_Fix_Tests.md` → re-run Docker → re-run 07
 3. Paste `2_Review/08_Anti_Shortcut/PROMPT.md` → must PASS
 4. If NEEDS CHANGES → fix → re-run Docker → re-run 08
 

@@ -2,8 +2,10 @@ You are auditing a problem.md for a Go Olympus challenge. Execute immediately. D
 
 The solver will see ONLY this description and the pinned repo. They will NOT see the tests or solution.
 
+**Automatic Navigation:** Use your shell/terminal to locate the challenge folder (e.g. `challenge/<slug>/`) inside the cloned repository and `cd` into it automatically. Then read `problem.md` from that directory.
+
 ### problem.md to audit:
-(read problem.md from your current working directory)
+(read problem.md from your current working directory — the challenge folder)
 
 Count the words yourself after reading. Report the count in your output.
 

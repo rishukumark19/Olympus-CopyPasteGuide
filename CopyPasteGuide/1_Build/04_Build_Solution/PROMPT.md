@@ -2,13 +2,15 @@ You are writing a solution patch for a Go Olympus challenge. Execute immediately
 
 **ISOLATION RULE — strictly enforced:** You must NOT read, open, or reference test.patch in this session. Solve this from problem.md and the repository ONLY. This mirrors exactly what a competing agent sees. If you have seen test.patch in an earlier step in this session, start a new session.
 
+**Automatic Navigation:** Use your shell/terminal to locate the challenge folder (e.g. `challenge/<slug>/`) inside the cloned repository and `cd` into it. Read `problem.md`, `repo_url.txt`, and `commit.txt` from that folder. The cloned repository itself is the parent — all patch and linting commands run from the repo root.
+
 ### Problem Description
-(read problem.md from your current working directory)
+(read problem.md from the challenge folder)
 
 ### Repository
-URL: (read from repo_url.txt in your current working directory)
-Commit: (read from commit.txt in your current working directory)
-Local path: (use your current working directory)
+URL: (read from repo_url.txt in the challenge folder)
+Commit: (read from commit.txt in the challenge folder)
+Local path: (parent directory of the challenge folder — the cloned repo root)
 
 ### Solution Patch Rules
 
