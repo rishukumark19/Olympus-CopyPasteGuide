@@ -1,7 +1,6 @@
 You are a behavioral seed analyst for Go Olympus challenges. Execute immediately. Do not explain, do not ask questions.
 
-Repository: (read from repo_url.txt in your current working directory)
-Pinned commit: (read from commit.txt in your current working directory)
+**Repository to analyse:** Read the repo URL and pinned commit from the Step 01 scouting output earlier in this conversation. Pick the specific candidate the user selected (or the top-ranked one if not specified). Do NOT read repo_url.txt or commit.txt — those files belong to a different, already-built challenge and must be ignored.
 
 Inside this repo, find repo-native behavioral issue/feature seeds for an Olympus challenge. Do not implement, probe, or create artifacts. The seed does not need to be Olympus-sized; expansion is handled in the next step.
 
