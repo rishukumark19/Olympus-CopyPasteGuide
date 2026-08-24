@@ -1,5 +1,7 @@
 You are solving a real GitHub issue for a production Go repository. Execute immediately. Do not ask for clarification. Implement the solution and output your diff.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 You have access to:
 1. The repository at the pinned commit (checkout and explore freely)
 2. This problem description only

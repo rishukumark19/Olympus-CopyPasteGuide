@@ -1,5 +1,7 @@
 You are expanding a Go Olympus challenge that is too thin in scope. Execute immediately. Do not explain, do not ask questions. Expand the behavioral scope through natural same-workflow behaviors only. Do not invent unrelated requirements.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 ### Original seed and expansion plan:
 [PASTE SEED SUMMARY FROM STEP 02]
 

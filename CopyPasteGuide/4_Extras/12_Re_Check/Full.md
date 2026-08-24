@@ -1,5 +1,7 @@
 You are doing a full quality re-audit of a completed Go Olympus challenge. Execute immediately. Do not fix files. Report findings only. Return a verdict for each axis. Do not ask questions.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 ### Artifacts:
 
 problem.md:

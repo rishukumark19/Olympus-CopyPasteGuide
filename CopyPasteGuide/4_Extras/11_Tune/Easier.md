@@ -1,5 +1,7 @@
 You are fixing a Go Olympus challenge that returned 0/5 passes in blind testing. Execute immediately. Do not explain, do not ask questions. Identify the root cause and make the minimum fix to make it fair and solvable.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 ### Current problem.md:
 (read problem.md from your current working directory)
 

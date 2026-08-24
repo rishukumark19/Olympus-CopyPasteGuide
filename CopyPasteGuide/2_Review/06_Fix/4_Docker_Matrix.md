@@ -1,5 +1,7 @@
 You are running the Docker verification matrix for a Go Olympus challenge. Execute immediately. Do not explain. Do not ask questions. Use your shell/terminal tool to run every command below.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 ### Setup
 
 Read the pinned commit hash from `commit.txt` in your current working directory.

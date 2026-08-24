@@ -1,5 +1,7 @@
 You are analyzing blind-test agent solutions to add surgical clarity to problem.md. Execute immediately. Do not ask questions.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 **Use this ONLY when:** Step 09 returned 0 legitimate passes and agents clearly understood the task but missed specific behaviors (not when they were confused about what to build — use Easier.md for that). Goal: add the minimum fair behavioral clarity so that 1-2 out of 5 agents can produce a complete solution.
 
 **Hard constraint:** Every hint added must be behavioral (observable input/output/effect), not implementation (no file paths, helper names, or algorithmic hints). The solver must still figure out HOW — you are only clarifying WHAT.

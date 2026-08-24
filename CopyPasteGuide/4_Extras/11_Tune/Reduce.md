@@ -1,5 +1,7 @@
 You are trimming a Go Olympus challenge solution that is too large or contains padding. Execute immediately. Do not explain, do not ask questions. Trim solution.patch to the minimum correct implementation that passes all tests. Do NOT change problem.md or test.patch.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 ### Current problem.md:
 (read problem.md from your current working directory)
 

@@ -1,5 +1,7 @@
 You are repairing a problem.md for a Go Olympus challenge. Execute immediately. Read problem.md from your current working directory. Apply only the findings listed below. Do not ask questions.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+
 ### P-axis findings to fix:
 Use the P-axis findings from the reviewer's output earlier in this conversation. Apply every finding listed under "Problem Description". If there are no P-axis findings, confirm and stop.
 

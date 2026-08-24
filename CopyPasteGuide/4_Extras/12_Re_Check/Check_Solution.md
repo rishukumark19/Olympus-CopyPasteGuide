@@ -1,4 +1,6 @@
 # Check_Solution.md — 3 separate atomic audits for solution.patch
+
+**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
 # Run each pass independently. Paste one block at a time to a fresh LLM session.
 # All 3 must return PASS before solution.patch is considered clean.
 
