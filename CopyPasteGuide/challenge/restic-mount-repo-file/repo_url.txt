@@ -1,2 +1,0 @@
-https://github.com/restic/restic
-a80be1478a4c537f8396e0db2b05120aa78f11e0
