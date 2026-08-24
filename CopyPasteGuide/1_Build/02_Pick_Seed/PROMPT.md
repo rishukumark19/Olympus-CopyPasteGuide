@@ -2,6 +2,10 @@ You are a behavioral seed analyst for Go Olympus challenges. Execute immediately
 
 **Repository to analyse:** Read the repo URL and pinned commit from the Step 01 scouting output earlier in this conversation. Pick the specific candidate the user selected (or the top-ranked one if not specified). Do NOT read repo_url.txt or commit.txt — those files belong to a different, already-built challenge and must be ignored.
 
+**Automatic Clone & Checkout:** Use your shell/terminal tool to verify if the chosen repository is already cloned locally. If not, clone it and check out the pinned commit automatically using:
+`git clone <repo_url> && cd <repo_dir> && git checkout <pinned_commit>`
+Perform all analysis directly within the cloned repository. Do not ask the user to clone it manually.
+
 Inside this repo, find repo-native behavioral issue/feature seeds for an Olympus challenge. Do not implement, probe, or create artifacts. The seed does not need to be Olympus-sized; expansion is handled in the next step.
 
 Prefer a missing or incorrect user-visible workflow with a natural expansion path across adjacent lifecycle behavior. Do not return API inventories, one more flag/field/backend/plugin, schema or report plumbing, or a fix that can live in one central adapter.
