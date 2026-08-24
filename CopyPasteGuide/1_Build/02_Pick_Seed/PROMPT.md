@@ -6,6 +6,8 @@ You are a behavioral seed analyst for Go Olympus challenges. Execute immediately
 `git clone <repo_url> && cd <repo_dir> && git checkout <pinned_commit>`
 Perform all analysis directly within the cloned repository. Do not ask the user to clone it manually.
 
+**Automatic Cleanup if Disqualified:** If all candidate seeds are DISQUALIFIED (or if the repo itself fails eligibility/verification), automatically delete the cloned repository folder from disk using your shell/terminal tool before completing output, so no unused repositories linger on disk.
+
 Inside this repo, find repo-native behavioral issue/feature seeds for an Olympus challenge. Do not implement, probe, or create artifacts. The seed does not need to be Olympus-sized; expansion is handled in the next step.
 
 Prefer a missing or incorrect user-visible workflow with a natural expansion path across adjacent lifecycle behavior. Do not return API inventories, one more flag/field/backend/plugin, schema or report plumbing, or a fix that can live in one central adapter.
@@ -44,3 +46,5 @@ Return candidates in this format — no other text before the list:
    PR overlap: <targeted open/closed/merged PR result>
    Negative discussion: <none, or disqualifying evidence>
    Expansion potential: <same-workflow behaviors and affected subsystems>
+
+(If all candidates are DISQUALIFIED, confirm that the cloned directory has been deleted.)

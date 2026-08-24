@@ -21,7 +21,7 @@ One file per step. Open it, paste into your LLM, read the output, act on it.
 1. Pick one repo from Session 1 that looks good (or let the LLM take the top candidate)
 2. Paste `1_Build/02_Pick_Seed/PROMPT.md` — the LLM will automatically clone the repo locally using its terminal, checkout the pinned commit, and analyze seeds
 3. Get back a list of seeds ranked READY / DISQUALIFIED
-4. If all DISQUALIFIED → back to Session 1, try a different repo
+4. If all DISQUALIFIED → the LLM automatically deletes the cloned repo folder → back to Session 1, try a different repo
 5. Note down your top READY seed — you'll use it next
 
 ### Session 3 — Build the problem + tests (03A)
