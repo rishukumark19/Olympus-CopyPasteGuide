@@ -122,60 +122,43 @@ CopyPasteGuide/
 
 ---
 
-## Pipeline Flow
+## Pipeline — Step by Step Decision Map
 
-| # | Path | What It Does |
-|---|------|-------------|
-| 01 | `1_Build/01_Find_Repo/` | Find 3-5 Go repo candidates |
-| 02 | `1_Build/02_Pick_Seed/` | Find the best behavioral seed in the chosen repo |
-| 03A | `1_Build/03A_Build/` | Write problem.md + test.patch (NO solution yet) |
-| 03B | `1_Build/03B_Check_Problem/` | Audit problem.md quality — must PASS before Step 03C |
-| 03C | `1_Build/03C_Docker_Matrix/` | Docker check — test.patch only: base=PASS, new=FAIL |
-| 04 | `1_Build/04_Build_Solution/` | Write solution.patch in a **fresh session** |
-| 04B | `1_Build/04B_Docker_Matrix/` | Docker check — both patches: all 4 must PASS |
-| 05 | `2_Review/05_Review/` | Full review — must get ACCEPTED 3/3 before moving on |
-| 06 | `2_Review/06_Fix/` | Repair for P / T / S axis failures from Step 05 |
-| 07 | `2_Review/07_Coverage/` | Find missing behavioral tests — must be CLEAN |
-| 08 | `2_Review/08_Anti_Shortcut/` | Hunt false positives / surviving mutations — must PASS |
-| 09 | `3_Validate/09_Blind_Test/` | 5 blind agent runs — target 1-4/5 legitimate passes |
-| 10 | `3_Validate/10_Submit/` | All-green checklist before submitting |
-| 11 | `4_Extras/11_Tune/` | Adjust difficulty / LOC after Step 09 reveals issues |
-| 12 | `4_Extras/12_Re_Check/` | Re-check existing artifacts or audit with a cheap/small model |
+Follow top to bottom. Each row tells you what to run and what to do with the result.
+
+| Step | What you paste | ✅ Good output → do this next | ❌ Bad output → do this instead |
+|:----:|:--------------|:------------------------------|:--------------------------------|
+| **01** | `1_Build/01_Find_Repo/PROMPT.md` | 3–5 repo candidates → pick one, go to **02** | 0 repos → search different Go category, re-run **01** |
+| **02** | `1_Build/02_Pick_Seed/PROMPT.md` | 1+ seed `READY` → go to **03A** | All DISQUALIFIED → try next candidate or back to **01** |
+| **03A** ⭐ | `1_Build/03A_Build/PROMPT.md` + seed *(new chat, best model)* | Docker `RESULT: PASS` → go to **03B** | FAIL → tell LLM what failed, fix in same session, re-run Docker |
+| **03B** | `1_Build/03B_Check_Problem/PROMPT.md` | `PASS` → go to **04** | `ISSUES FOUND` → fix `problem.md` in same session, re-run **03B** |
+| **04** ⚠️ | `1_Build/04_Build_Solution/PROMPT.md` *(brand new chat — never seen test.patch)* | `solution.patch` written → go to **04B** | — |
+| **04B** | `1_Build/04B_Docker_Matrix/README.md` | All 4 runs PASS → go to **05** | Any FAIL → paste `1_Fix_Solution.md`, re-run **04B** |
+| **05** | `2_Review/05_Review/PROMPT.md` *(max 3 cycles)* | `ACCEPTED 3/3` → go to **07** | P → `3_Fix_Problem` · T → `2_Fix_Tests` + Docker · S → `1_Fix_Solution` + Docker → re-run **05** · Still failing after 3× → back to **02** |
+| **07** | `2_Review/07_Coverage/PROMPT.md` | `CLEAN` → go to **08** | `GAPS FOUND` → `2_Fix_Tests` → Docker → re-run **07** |
+| **08** | `2_Review/08_Anti_Shortcut/PROMPT.md` | `PASS` → go to **09** | `NEEDS CHANGES` → `2_Fix_Tests` or `3_Fix_Problem` → Docker → re-run **08** |
+| **09** | `3_Validate/09_Blind_Test/PROMPT.md` × 5 fresh chats | 1–4/5 legitimate → go to **10** | 0/5 confused → `Easier.md` · 0/5 understood → `After_Runs.md` · 5/5 → `Harder.md` or `Expand.md` · 3–4/5 shortcuts → `Harder.md` → Docker → **08** → re-run **09** |
+| **10** | `3_Validate/10_Submit/CHECKLIST.md` | All GREEN → **submit** | Any RED → fix it, re-run checklist |
+
+> ⭐ Step 03A now runs Docker verification automatically at the end — no separate 03C step needed.
+> ⚠️ Step 04 MUST be a brand new chat window with no memory of Sessions 03A/03B.
 
 ---
 
-## Routing — What to Do After Each Output
+## 🔧 Fix File Quick Reference
 
-| Step output | Action |
-|-------------|--------|
-| 01 → got 3-5 repos | Pick 1 → run 02 |
-| 01 → 0 repos | Search different category → re-run 01 |
-| 02 → 1+ READY | Take top READY seed → run 03A |
-| 02 → all DISQUALIFIED | New repo → back to 01 |
-| 03A → files created | → run 03B |
-| 03B → PASS | → run 03C (Docker Matrix) |
-| 03B → ISSUES FOUND | Fix problem.md → re-run 03B |
-| 03C → base=PASS, new=FAIL | → run 04 (new session!) |
-| 03C → base=FAIL or new=PASS | Fix test.patch → re-run 03C |
-| 03C → 03A aborted (seed too small) | New seed → back to 02 |
-| 04 → solution.patch created | → run 04B (Docker Matrix, both patches) |
-| 04B → all PASS | → run 05 |
-| 04B → any FAIL | Fix solution.patch → re-run 04B |
-| 05 → ACCEPTED (all 3/3) | → run 07 |
-| 05 → P findings | 3_Fix_Problem → re-run 05 |
-| 05 → T findings | 2_Fix_Tests → 4_Docker_Matrix → re-run 05 |
-| 05 → S findings | 1_Fix_Solution → 4_Docker_Matrix → re-run 05 |
-| 05 → still failing after 3 cycles | New seed → back to 02 |
-| 07 → CLEAN | → run 08 |
-| 07 → GAPS FOUND | Fix_Tests → re-run 07 |
-| 08 → PASS | → run 09 |
-| 08 → NEEDS CHANGES | Fix_Tests or Fix_Problem → re-run 08 |
-| 09 → 0/5, confused agents | → Easier.md |
-| 09 → 0/5, agents understood task | → After_Runs.md |
-| 09 → 1-2/5 legitimate | → 10_Submit |
-| 09 → 3-4/5 with shortcuts | → Harder.md → Docker → 08 → re-run 09 |
-| 09 → 3-4/5 legitimate | → 10_Submit (acceptable) |
-| 09 → 5/5 | TOO EASY → Harder.md or Expand.md |
+When something breaks, pick the right fix file from `2_Review/06_Fix/`:
+
+| Symptom | File to paste |
+|:--------|:-------------|
+| Solution wrong / incomplete | `1_Fix_Solution.md` |
+| Tests missing / too weak / wrong | `2_Fix_Tests.md` |
+| problem.md has quality issues | `3_Fix_Problem.md` |
+| Docker fails, need to diagnose | `4_Docker_Matrix.md` |
+
+> **After fixing `test.patch` or `solution.patch` → always re-run Docker before re-running 05/07/08.**
+
+
 
 ---
 
