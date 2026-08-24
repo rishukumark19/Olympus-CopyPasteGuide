@@ -38,6 +38,7 @@ Verify:
 test.patch must contain ONLY new test files + root test.sh. Do NOT edit upstream tests or shared helpers.
 
 Test rules (T1-T8):
+- **T0 — COMPILE ON BASE (most common failure):** Every test file added by test.patch MUST compile cleanly on the base commit with NO solution applied. Never reference struct fields, functions, types, or imports that solution.patch introduces. If you need to assert a new field exists, do it via a public round-trip (e.g. marshal → parse → check output) — not by accessing the field directly. Violating T0 causes Phase 1 of the Docker matrix to fail with a compile error. Verify this mentally before writing each test: "Does this test file compile if I delete solution.patch entirely?"
 - T1: 100% fail at base commit, 100% pass with solution
 - T2: Deterministic — no timing, randomness, goroutine scheduling, host state
 - T3: Strong — reject inaccurate/shortcut implementations

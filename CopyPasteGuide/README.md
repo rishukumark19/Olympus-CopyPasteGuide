@@ -133,7 +133,7 @@ Follow top to bottom. Each row tells you what to run and what to do with the res
 | **03A** ⭐ | `1_Build/03A_Build/PROMPT.md` + seed *(new chat, best model)* | Docker `RESULT: PASS` → go to **03B** | FAIL → tell LLM what failed, fix in same session, re-run Docker |
 | **03B** | `1_Build/03B_Check_Problem/PROMPT.md` | `PASS` → go to **04** | `ISSUES FOUND` → fix `problem.md` in same session, re-run **03B** |
 | **04** ⚠️ | `1_Build/04_Build_Solution/PROMPT.md` *(brand new chat — never seen test.patch)* | `solution.patch` written → go to **04B** | — |
-| **04B** | `1_Build/04B_Docker_Matrix/README.md` | All 4 runs PASS → go to **05** | Any FAIL → paste `1_Fix_Solution.md`, re-run **04B** |
+| **04B** | `1_Build/04B_Docker_Matrix/README.md` | All 4 runs PASS → go to **05** | Phase 1 compile error → `5_Fix_Compile.md` · Phase 2 new fails → `1_Fix_Solution.md` · re-run **04B** |
 | **05** | `2_Review/05_Review/PROMPT.md` *(max 3 cycles)* | `ACCEPTED 3/3` → go to **07** | P → `3_Fix_Problem` · T → `2_Fix_Tests` + Docker · S → `1_Fix_Solution` + Docker → re-run **05** · Still failing after 3× → back to **02** |
 | **07** | `2_Review/07_Coverage/PROMPT.md` | `CLEAN` → go to **08** | `GAPS FOUND` → `2_Fix_Tests` → Docker → re-run **07** |
 | **08** | `2_Review/08_Anti_Shortcut/PROMPT.md` | `PASS` → go to **09** | `NEEDS CHANGES` → `2_Fix_Tests` or `3_Fix_Problem` → Docker → re-run **08** |
@@ -151,10 +151,11 @@ When something breaks, pick the right fix file from `2_Review/06_Fix/`:
 
 | Symptom | File to paste |
 |:--------|:-------------|
-| Solution wrong / incomplete | `1_Fix_Solution.md` |
-| Tests missing / too weak / wrong | `2_Fix_Tests.md` |
+| Tests don't compile on base (Phase 1 compile error) | `5_Fix_Compile.md` |
+| Solution wrong / incomplete (Phase 2 new fails) | `1_Fix_Solution.md` |
+| Tests missing / too weak / wrong (post-review) | `2_Fix_Tests.md` |
 | problem.md has quality issues | `3_Fix_Problem.md` |
-| Docker fails, need to diagnose | `4_Docker_Matrix.md` |
+| Docker fails unexpectedly, need to diagnose | `4_Docker_Matrix.md` |
 
 > **After fixing `test.patch` or `solution.patch` → always re-run Docker before re-running 05/07/08.**
 
