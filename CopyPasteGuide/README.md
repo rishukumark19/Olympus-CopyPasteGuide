@@ -111,12 +111,14 @@ If new still fails → `cd challenge/<slug>` → paste `06_Fix/Docker_Matrix.md`
 ```
 CopyPasteGuide/
 │
-├── 1_Build/                      ← steps 01–04: creating things
+├── 1_Build/                      ← steps 01–04B: creating and verifying things
 │   ├── 01_Find_Repo/PROMPT.md
 │   ├── 02_Pick_Seed/PROMPT.md
 │   ├── 03A_Build/PROMPT.md
 │   ├── 03B_Check_Problem/PROMPT.md
-│   └── 04_Build_Solution/PROMPT.md
+│   ├── 03C_Docker_Matrix/PROMPT.md   ← Docker check after 03A (test.patch only)
+│   ├── 04_Build_Solution/PROMPT.md
+│   └── 04B_Docker_Matrix/README.md  ← Docker check after 04 (both patches) — paste 06_Fix/Docker_Matrix.md
 │
 ├── 2_Review/                     ← steps 05–08: auditing things
 │   ├── 05_Review/PROMPT.md
@@ -142,8 +144,10 @@ CopyPasteGuide/
 | 01 | `1_Build/01_Find_Repo/` | Find 3-5 Go repo candidates |
 | 02 | `1_Build/02_Pick_Seed/` | Find the best behavioral seed in the chosen repo |
 | 03A | `1_Build/03A_Build/` | Write problem.md + test.patch (NO solution yet) |
-| 03B | `1_Build/03B_Check_Problem/` | Audit problem.md quality — must PASS before Step 04 |
-| 04 | `1_Build/04_Build_Solution/` | Write solution.patch (tests are now locked) |
+| 03B | `1_Build/03B_Check_Problem/` | Audit problem.md quality — must PASS before Step 03C |
+| 03C | `1_Build/03C_Docker_Matrix/` | Docker check — test.patch only: base=PASS, new=FAIL |
+| 04 | `1_Build/04_Build_Solution/` | Write solution.patch in a **fresh session** |
+| 04B | `1_Build/04B_Docker_Matrix/` | Docker check — both patches: all 4 must PASS |
 | 05 | `2_Review/05_Review/` | Full review — must get ACCEPTED 3/3 before moving on |
 | 06 | `2_Review/06_Fix/` | Repair for P / T / S axis failures from Step 05 |
 | 07 | `2_Review/07_Coverage/` | Find missing behavioral tests — must be CLEAN |
@@ -163,12 +167,15 @@ CopyPasteGuide/
 | 01 → 0 repos | Search different category → re-run 01 |
 | 02 → 1+ READY | Take top READY seed → run 03A |
 | 02 → all DISQUALIFIED | New repo → back to 01 |
-| 03A → Docker: base=PASS, new=FAIL | → run 03B |
-| 03A → Docker broken | Fix test.sh / Dockerfile → re-run Docker |
-| 03B → PASS | → run 04 |
+| 03A → files created | → run 03B |
+| 03B → PASS | → run 03C (Docker Matrix) |
 | 03B → ISSUES FOUND | Fix problem.md → re-run 03B |
-| 04 → Docker: base=PASS, new=PASS | → run 05 |
-| 04 → Docker fails | Fix solution.patch → re-run Docker |
+| 03C → base=PASS, new=FAIL | → run 04 (new session!) |
+| 03C → base=FAIL or new=PASS | Fix test.patch → re-run 03C |
+| 03C → 03A aborted (seed too small) | New seed → back to 02 |
+| 04 → solution.patch created | → run 04B (Docker Matrix, both patches) |
+| 04B → all PASS | → run 05 |
+| 04B → any FAIL | Fix solution.patch → re-run 04B |
 | 05 → ACCEPTED (all 3/3) | → run 07 |
 | 05 → P findings | Fix_Problem → re-run 05 |
 | 05 → T findings | Fix_Tests → Docker → re-run 05 |
