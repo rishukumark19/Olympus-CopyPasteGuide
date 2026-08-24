@@ -3,14 +3,14 @@
 # You are here because Step 05 returned REVISION REQUESTED.
 #
 # WHICH FILE TO USE:
-#   P score < 3/3 → Fix_Problem.md   (problem.md repair)
-#   T score < 3/3 → Fix_Tests.md     (test.patch repair)
-#   S score < 3/3 → Fix_Solution.md  (solution.patch repair)
+#   P score < 3/3 → 3_Fix_Problem.md   (problem.md repair)
+#   T score < 3/3 → 2_Fix_Tests.md     (test.patch repair)
+#   S score < 3/3 → 1_Fix_Solution.md  (solution.patch repair)
 #
 # IF MULTIPLE AXES FAIL — fix in this order:
-#   1. Fix_Solution.md first  (solution bugs can mask test failures)
-#   2. Fix_Tests.md second    (test gaps need clean solution to re-verify)
-#   3. Fix_Problem.md last    (description is fastest to fix)
+#   1. 1_Fix_Solution.md first  (solution bugs can mask test failures)
+#   2. 2_Fix_Tests.md second    (test gaps need clean solution to re-verify)
+#   3. 3_Fix_Problem.md last    (description is fastest to fix)
 #
 # AFTER EACH FIX:
 #   - For P fix only: no Docker needed — go directly back to Step 05.

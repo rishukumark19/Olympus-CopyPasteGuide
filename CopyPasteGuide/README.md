@@ -122,7 +122,7 @@ CopyPasteGuide/
 │
 ├── 2_Review/                     ← steps 05–08: auditing things
 │   ├── 05_Review/PROMPT.md
-│   ├── 06_Fix/Fix_Problem.md  Fix_Tests.md  Fix_Solution.md  Docker_Matrix.md
+│   ├── 06_Fix/1_Fix_Solution.md  2_Fix_Tests.md  3_Fix_Problem.md  4_Docker_Matrix.md
 │   ├── 07_Coverage/PROMPT.md
 │   └── 08_Anti_Shortcut/PROMPT.md
 │
@@ -177,9 +177,9 @@ CopyPasteGuide/
 | 04B → all PASS | → run 05 |
 | 04B → any FAIL | Fix solution.patch → re-run 04B |
 | 05 → ACCEPTED (all 3/3) | → run 07 |
-| 05 → P findings | Fix_Problem → re-run 05 |
-| 05 → T findings | Fix_Tests → Docker → re-run 05 |
-| 05 → S findings | Fix_Solution → Docker → re-run 05 |
+| 05 → P findings | 3_Fix_Problem → re-run 05 |
+| 05 → T findings | 2_Fix_Tests → 4_Docker_Matrix → re-run 05 |
+| 05 → S findings | 1_Fix_Solution → 4_Docker_Matrix → re-run 05 |
 | 05 → still failing after 3 cycles | New seed → back to 02 |
 | 07 → CLEAN | → run 08 |
 | 07 → GAPS FOUND | Fix_Tests → re-run 07 |
