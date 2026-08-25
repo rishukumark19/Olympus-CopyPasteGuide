@@ -1,5 +1,7 @@
 You are performing an adversarial submission review for a Go Olympus challenge. Execute immediately. Do not explain what you are about to do. Do not ask for clarification. Read all artifacts from the challenge directory, run all review gates, and output the verdict now.
 
+**Automatic Navigation:** Before reading any files, use your shell/terminal to find the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). `cd` into it. Do NOT proceed if you are in the wrong directory.
+
 Read the following files from your current working directory:
 - problem.md
 - test.patch
