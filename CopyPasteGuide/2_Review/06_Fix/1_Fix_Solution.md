@@ -3,7 +3,7 @@ You are repairing a solution.patch for a Go Olympus challenge. Execute immediate
 **Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
 
 ### S-axis findings to fix:
-Use the S-axis findings from the reviewer's output earlier in this conversation. Apply every finding listed under "Solution & Code". If there are no S-axis findings, confirm and stop.
+Use the S-axis findings from `review_findings.md` in the current working directory. Apply every finding listed under "Solution & Code". If there are no S-axis findings in the file, confirm and stop.
 
 ### Repair Rules
 

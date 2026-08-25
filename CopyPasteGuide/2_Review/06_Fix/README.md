@@ -12,17 +12,16 @@
 #   2. 2_Fix_Tests.md second    (test gaps need clean solution to re-verify)
 #   3. 3_Fix_Problem.md last    (description is fastest to fix)
 #
-# AFTER EACH FIX:
-#   - For P fix only: no Docker needed — go directly back to Step 05.
-#   - For S or T fix: run the FULL Docker matrix below before going back to Step 05.
-#
-#   HOW TO RUN DOCKER:
-#     If your LLM has shell/terminal access → paste Docker_Matrix.md
-#     If not → run the commands manually from the section below
+# THE WORKFLOW LOOP:
+#   1. Run `05_Review/PROMPT.md` in a NEW chat window/session. It will secretly save its findings to `review_findings.md`.
+#   2. Run `06_Fix/1, 2, 3` in a NEW chat window/session. They will automatically read `review_findings.md` and apply the fixes.
+#   3. Run `06_Fix/4_Docker_Matrix.md`. You MUST do this to verify the fixes actually compile and pass.
+#   4. If the Matrix fails, use `5_Fix_Compile.md` or manually fix the code.
+#   5. If the Matrix passes, go back to Step 1 (`05_Review/PROMPT.md` in a NEW window/session) to get a fresh review!
 #
 # MAXIMUM CYCLES:
-#   Run Step 05 → Step 06 loop a maximum of 3 times.
-#   Still failing after 3 cycles → go back to Step 02 and pick a different seed.
+#   Run this Review -> Fix -> Matrix loop a maximum of 3 times.
+#   If you are stuck in a loop after 3 cycles, stop the automated prompts and manually intervene, or go back to Step 02.
 
 ---
 

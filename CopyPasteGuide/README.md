@@ -59,11 +59,16 @@ If new still fails → paste `2_Review/06_Fix/4_Docker_Matrix.md` to diagnose �
 
 ### Session 6 — Full review (05) — loop up to 3 times
 
-1. Paste `2_Review/05_Review/PROMPT.md`
-2. Read the verdict:
+1. Open a **NEW chat window/session**.
+2. Paste `2_Review/05_Review/PROMPT.md`. (It will review and secretly save `review_findings.md`).
+3. Read the verdict:
    - **ACCEPTED (3/3 all)** → go to Session 7
-   - **REVISION REQUESTED** → fix with the relevant `06_Fix/` file → re-run Docker if T or S changed → re-run 05
-   - Still failing after **3 loops** → back to Session 2, pick a different seed
+   - **REVISION REQUESTED** → 
+     1. Open another **NEW chat window/session**.
+     2. Run the relevant `06_Fix/1, 2, 3` prompts (they auto-read `review_findings.md`).
+     3. Run `06_Fix/4_Docker_Matrix.md` to verify fixes compile and pass.
+     4. Loop back to step 1 (New window -> `05_Review`).
+   - Still failing after **3 loops** → Stop automated prompts. Manually intervene, or go back to Session 2 to pick a different seed.
 
 ### Session 7 — Coverage + Anti-Shortcut
 

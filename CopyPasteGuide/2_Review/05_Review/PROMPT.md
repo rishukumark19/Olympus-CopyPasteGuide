@@ -102,6 +102,8 @@ Other Notes:
 - Shortcuts found: <list or none>
 - Residual risk: <risk>
 
+**Important**: Also use your file writing tool to save this EXACT output to a file named `review_findings.md` in the current working directory. Overwrite it if it exists.
+
 
 Rules:
 - Use REVISION REQUESTED if ANY category is below 3/3, any material shortcut passes, any problem/test mismatch, or artifact hygiene is invalid.
