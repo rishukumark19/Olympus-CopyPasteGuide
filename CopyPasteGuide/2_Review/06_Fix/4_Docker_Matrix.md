@@ -93,7 +93,7 @@ MATRIX RESULT: <ALL PASS | FAIL>
 What to fix next:
 - PHASE1_BASE FAIL + git apply error → test.patch is corrupt or has wrong paths. Fix the patch formatting (line endings, diff headers, file paths). Run: `git apply --check test.patch` to see the exact error.
 - PHASE1_BASE FAIL + git apply OK → a test in test.patch broke an existing upstream test. Check which base test failed — it is likely in a file your test.patch touches.
-- PHASE1_NEW PASS (= BROKEN) → your challenge tests pass WITHOUT the solution — they are not testing the right thing. The tests must be rewritten to actually fail on the base repo.
-- PHASE2_BASE FAIL → your solution.patch introduced a regression. One of the hunks broke an existing function. Find which base test failed and trace it back to the hunk.
-- PHASE2_NEW FAIL → solution.patch is incomplete. The listed failing tests have no corresponding implementation in solution.patch. Add the missing logic.
-- ALL PASS → artifacts are verified. Go back to Step 05.
+- PHASE1_NEW PASS (= BROKEN) → Your tests are broken (they pass without the solution). Open a NEW window and run `06_Fix/2_Fix_Tests.md` to rewrite them so they fail on the base repo.
+- PHASE2_BASE FAIL → Your solution caused a regression. Open a NEW window and run `06_Fix/1_Fix_Solution.md` to fix the hunk that broke the old tests.
+- PHASE2_NEW FAIL → Your solution is incomplete (or your test is wrong). Open a NEW window and run `06_Fix/1_Fix_Solution.md` to add the missing logic, or `2_Fix_Tests.md` if the test itself is bugged.
+- ALL PASS → You did it! Open a NEW window and run `05_Review/PROMPT.md` for your final review.
