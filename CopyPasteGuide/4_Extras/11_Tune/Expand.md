@@ -26,8 +26,8 @@ Commit: (read from commit.txt in your current working directory)
 ### Expansion Rules
 
 Target after expansion:
-- 300-500 meaningful implementation LOC (never exceed 600)
-- 4+ existing non-test files touched
+- 500+ meaningful implementation LOC
+- 5+ existing non-test files touched
 - 2+ subsystems touched
 - Problem.md stays 80-160 words
 

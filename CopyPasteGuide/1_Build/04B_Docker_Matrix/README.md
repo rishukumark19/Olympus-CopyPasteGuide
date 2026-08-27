@@ -1,8 +1,9 @@
-# Step 04B — Docker Matrix (both patches)
+# Step 04B — Docker Matrix (Test Check + Solution Check)
 
-This is the same prompt as `2_Review/06_Fix/Docker_Matrix.md`.
-Paste that file here. It runs both phases:
-- Phase 1: test.patch only → base=PASS, new=FAIL
-- Phase 2: both patches → base=PASS, new=PASS
+This runs the Docker Matrix using `2_Review/06_Fix/4_Docker_Matrix.md`.
 
-All 4 checks must pass before proceeding to Step 05.
+It checks both parts:
+1. **TEST CHECK (`test.patch` only):** Base tests = PASS (0), New tests = FAIL (non-zero)
+2. **SOLUTION CHECK (`solution.patch` added):** Base tests = PASS (0), New tests = PASS (0)
+
+All checks must pass before proceeding to Step 05 or Step 09A.

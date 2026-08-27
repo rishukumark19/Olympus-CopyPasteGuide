@@ -1,6 +1,15 @@
 You are repairing a problem.md for a Go Olympus challenge. Execute immediately. Read problem.md from your current working directory. Apply only the findings listed below. Do not ask questions.
 
-**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+### Working Context
+<!-- Fill in BOTH fields before pasting -->
+REPO_LOCAL_PATH: [ABSOLUTE PATH TO CLONED REPO — e.g. C:\Users\you\repos\myrepo]
+CHALLENGE_SLUG:  [SLUG — the folder name inside challenge/ — e.g. least-latency-selection-policy]
+
+**Navigation:** Use your shell/terminal to run:
+```
+cd <REPO_LOCAL_PATH>/challenge/<CHALLENGE_SLUG>
+```
+Do NOT proceed if `problem.md` and `review_findings.md` are not both present.
 
 ### P-axis findings to fix:
 Use the P-axis findings from `review_findings.md` in the current working directory. Apply every finding listed under "Problem Description". If there are no P-axis findings in the file, confirm and stop.

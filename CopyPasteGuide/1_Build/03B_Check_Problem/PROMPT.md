@@ -2,7 +2,17 @@ You are auditing a problem.md for a Go Olympus challenge. Execute immediately. D
 
 The solver will see ONLY this description and the pinned repo. They will NOT see the tests or solution.
 
-**Automatic Navigation:** Use your shell/terminal to locate the challenge folder (e.g. `challenge/<slug>/`) inside the cloned repository and `cd` into it automatically. Then read `problem.md` from that directory.
+### Working Context
+<!-- Fill in BOTH fields before pasting -->
+REPO_LOCAL_PATH: [ABSOLUTE PATH TO CLONED REPO — e.g. C:\Users\you\repos\myrepo]
+CHALLENGE_SLUG:  [SLUG — the folder name inside challenge/ — e.g. least-latency-selection-policy]
+
+**Navigation:** Use your shell/terminal to run:
+```
+cd <REPO_LOCAL_PATH>
+cd challenge/<CHALLENGE_SLUG>
+```
+All subsequent file reads happen from this directory. Do NOT proceed if `problem.md` is not present.
 
 ### problem.md to audit:
 (read problem.md from your current working directory — the challenge folder)

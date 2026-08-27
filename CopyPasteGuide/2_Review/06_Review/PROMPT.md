@@ -1,6 +1,16 @@
 You are performing an adversarial submission review for a Go Olympus challenge. Execute immediately. Do not explain what you are about to do. Do not ask for clarification. Read all artifacts from the challenge directory, run all review gates, and output the verdict now.
 
-**Automatic Navigation:** Before reading any files, use your shell/terminal to find the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). `cd` into it. Do NOT proceed if you are in the wrong directory.
+### Working Context
+<!-- Fill in BOTH fields before pasting -->
+REPO_LOCAL_PATH: [ABSOLUTE PATH TO CLONED REPO — e.g. C:\Users\you\repos\myrepo]
+CHALLENGE_SLUG:  [SLUG — the folder name inside challenge/ — e.g. least-latency-selection-policy]
+
+**Navigation:** Use your shell/terminal to run:
+```
+cd <REPO_LOCAL_PATH>/challenge/<CHALLENGE_SLUG>
+rm -f review_findings.md # Delete stale findings
+```
+Do NOT proceed if `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile` are not all present.
 
 Read the following files from your current working directory:
 - problem.md
@@ -104,7 +114,7 @@ Other Notes:
 - Shortcuts found: <list or none>
 - Residual risk: <risk>
 
-**Important**: Also use your file writing tool to save this EXACT output to a file named `review_findings.md` in the current working directory. Overwrite it if it exists.
+**CRITICAL REQUIREMENT:** Before you stop, you MUST use your file writing tool to save this EXACT output to a file named `review_findings.md` in the current working directory. Overwrite it if it exists. If you fail to write this file, the workflow will break!
 
 
 Rules:

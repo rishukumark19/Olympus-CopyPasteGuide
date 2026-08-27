@@ -1,6 +1,6 @@
 You are building a Go Olympus challenge. Execute immediately. Do not explain. Do not ask questions. This session produces ONLY problem.md and test.patch. Do NOT produce solution.patch.
 
-**Size target (non-negotiable):** The final challenge must require 300-500 meaningful implementation LOC across 5+ existing non-test files touching 2+ subsystems. Meaningful LOC excludes blank lines, comment-only lines, imports, declarations without logic, braces, generated files, boilerplate, and mechanical propagation. Do NOT pad to hit numbers — scope must emerge from real requirements. If natural expansion of this seed cannot reach 300 LOC across 5 files, report that and stop.
+**Size target (non-negotiable):** The final challenge must require 500+ meaningful implementation LOC across 5+ existing non-test files touching 2+ subsystems. Meaningful LOC excludes blank lines, comment-only lines, imports, declarations without logic, braces, generated files, boilerplate, and mechanical propagation. Do NOT pad to hit numbers — scope must emerge from real requirements. If natural expansion of this seed cannot reach 500 LOC across 5 files, report that and stop.
 
 **Cross-cutting is your strongest lever.** A solution that cuts across several layers or subsystems (e.g. parser → planner → executor, or config → CLI → storage) is harder for agents and carries more effective LOC than one confined to a single spot. If your idea keeps landing short on difficulty or LOC, expand it to the next adjacent layer in the same workflow — not a disconnected feature.
 
@@ -16,6 +16,8 @@ Commit: [PINNED COMMIT HASH from Step 01/02]
 Perform all subsequent build steps inside this cloned repository. Do not ask the user to clone it manually.
 
 ### Pre-Work (Do First)
+
+**STEP 0 — Blocked Repo Check:** Before anything else, confirm the target repo is NOT on the project's blocked-repo list. If it is blocked, STOP immediately and tell the user to pick a different repo. This is the single most expensive mistake to make late.
 
 Before writing any artifact:
 1. Use authenticated gh CLI to inspect open/closed/merged PRs, issues, Discussions, full comments/reviews. Stop on direct PR overlap or negative maintainer direction.
@@ -40,7 +42,19 @@ test.patch must contain ONLY new test files + root test.sh. Do NOT edit upstream
 Test rules (T1-T8):
 - **T0 — COMPILE ON BASE (most common failure):** Every test file added by test.patch MUST compile cleanly on the base commit with NO solution applied. Never reference struct fields, functions, types, or imports that solution.patch introduces. If you need to assert a new field exists, do it via a public round-trip (e.g. marshal → parse → check output) — not by accessing the field directly. Violating T0 causes Phase 1 of the Docker matrix to fail with a compile error. Verify this mentally before writing each test: "Does this test file compile if I delete solution.patch entirely?"
 - T1: 100% fail at base commit, 100% pass with solution
-- T2: Deterministic — no timing, randomness, goroutine scheduling, host state
+- T2: Deterministic — no timing, randomness, goroutine scheduling, host state. **Never use bare `time.Sleep` in tests.** Instead, use a polling helper:
+  ```go
+  // Standard pattern — copy into every test file that needs it:
+  func waitFor(t *testing.T, timeout, interval time.Duration, condition func() bool) {
+      t.Helper()
+      deadline := time.Now().Add(timeout)
+      for time.Now().Before(deadline) {
+          if condition() { return }
+          time.Sleep(interval)
+      }
+      t.Fatalf("condition not met within %s", timeout)
+  }
+  ```
 - T3: Strong — reject inaccurate/shortcut implementations
 - T4: Extensive — all behaviors + obvious edge cases covered
 - T5: Only stated or repo-discoverable behavior
@@ -63,11 +77,12 @@ test.sh requirements:
 - Accepts exactly one nonempty: --output_path PATH or --output_path=PATH
 - Rejects: missing, duplicate, unknown, mixed-mode, extra arguments
 - Emits non-empty JUnit XML at the requested path (via gotestsum --junitfile or go-junit-report)
-- base mode: runs the full offline upstream suite for touched surfaces, excluding ONLY new challenge tests and individually proven flaky tests. NEVER hides regressions.
+- **base mode: scope TIGHTLY to only the specific packages and test patterns that the solution touches** (e.g. `-run TestJetStream` not `./...`). Do NOT run the entire upstream suite — this causes 10–30 minute timeouts from unrelated tests. NEVER hides regressions within scope.
 - new mode: runs ONLY the new challenge tests
 - Uses go test ./... when CHALLENGE_DOCKER=1
 - Returns the runner exit status
 - Never installs, fetches, or mutates outside the repo
+- **MUST use Unix LF line endings (not Windows CRLF).** After writing test.sh, always run: `git add challenge/<slug>/test.sh` then verify with `file test.sh` that it is not CRLF. On Windows, set: `git config core.autocrlf false` before any git operations.
 
 ### Gate 3: Problem Description (write LAST, after tests are locked)
 
@@ -108,12 +123,25 @@ CMD ["/bin/bash"]
 
 Build is amd64, NOT arm64. Install dependencies at build time. No tests in Dockerfile.
 
-Generate test.patch with: git diff --cached (never hand-edit patches).
-Confirm: git apply --check, test.sh is executable, no platform branding.
+Generate test.patch with: `git diff --cached` (never hand-edit patches).
+
+**Pre-Docker gate — run these BEFORE building Docker:**
+```bash
+# From a CLEAN checkout of the pinned commit:
+git stash && git checkout <HASH> && git clean -fd -e challenge/
+git apply --check challenge/<slug>/test.patch   # MUST print no errors
+git apply challenge/<slug>/test.patch
+git apply --check challenge/<slug>/solution.patch  # Only after test.patch applied
+```
+If either `--check` fails, fix the patch on disk before running Docker. Never debug inside a running container.
+
+Confirm: git apply --check passes, test.sh is executable (chmod +x in patch), no platform branding.
 
 ### Folder Setup (do this first)
 
 Create: challenge/<short-slug-of-the-issue-title>/
+
+> **This slug becomes CHALLENGE_SLUG** — write it down. Every downstream prompt (03B, 04, 05, 06_Fix/*, 07, 08) requires you to fill in `REPO_LOCAL_PATH` and `CHALLENGE_SLUG` before pasting.
 
 Inside it, create:
 - problem.md
@@ -129,6 +157,8 @@ Inside it, create:
 After completing all gates and writing files, confirm:
 
 Challenge folder created: challenge/<slug>/
+CHALLENGE_SLUG: <slug>      ← **save this for all downstream prompts**
+REPO_LOCAL_PATH: <absolute path to repo root>   ← **save this too**
 Files written:
 - problem.md ✓
 - test.patch ✓
@@ -139,9 +169,9 @@ Files written:
 
 Then print the full content of problem.md for visual verification.
 
-### Docker Verification (Phase 1 — run immediately after writing files)
+### Docker Verification (TEST CHECK — run immediately after writing files)
 
-After writing all files, use your shell/terminal to run the Docker verification matrix. Do NOT skip this. Execute every command directly in your shell tool.
+After writing all files, use your shell/terminal to run the Docker verification. Do NOT skip this. Execute every command directly in your shell tool.
 
 ```bash
 # From the repo root (parent of the challenge folder):
@@ -153,33 +183,33 @@ git apply challenge/<slug>/test.patch
 # Build and run — try Docker first; if unavailable, run ./test.sh natively
 docker build -t challenge-verify .
 docker run --rm --network none challenge-verify ./test.sh --output_path /tmp/base1.xml base
-echo "PHASE1_BASE_EXIT=$?"
+echo "TEST_CHECK_BASE_EXIT=$?"
 docker run --rm --network none challenge-verify ./test.sh --output_path /tmp/new1.xml new
-echo "PHASE1_NEW_EXIT=$?"
+echo "TEST_CHECK_NEW_EXIT=$?"
 
 git stash pop
 ```
 
 Expected results:
-- PHASE1_BASE_EXIT=0   → upstream tests pass (no regressions)
-- PHASE1_NEW_EXIT≠0   → challenge tests fail correctly (no solution yet)
+- TEST_CHECK_BASE_EXIT=0   → upstream tests pass (no regressions)
+- TEST_CHECK_NEW_EXIT≠0   → challenge tests fail correctly (no solution yet)
 
 Report this before finishing:
 
-PHASE1_BASE: <PASS | FAIL (exit code N)>
+TEST_CHECK_BASE: <PASS | FAIL (exit code N)>
   git apply result: <"OK" | "FAILED — error: <exact error>">
   Failing tests (if any): <list or "none">
   Root cause: <"patch corrupt/conflict" | "upstream test broken" | "docker error" | "none">
 
-PHASE1_NEW: <FAIL (exit≠0) = CORRECT | PASS (exit=0) = BROKEN>
+TEST_CHECK_NEW: <FAIL (exit≠0) = CORRECT | PASS (exit=0) = BROKEN — tests must fail without solution>
   Failing tests: <list — these are expected to fail>
 
 RESULT: <PASS | FAIL>
 
 If RESULT is FAIL:
-- PHASE1_BASE FAIL + git apply error → test.patch is corrupt. Fix it before proceeding.
-- PHASE1_BASE FAIL + git apply OK → a test broke an upstream test. Identify and fix.
-- PHASE1_NEW PASS → challenge tests pass without a solution. Fix tests before proceeding.
+- TEST_CHECK_BASE FAIL + git apply error → test.patch is corrupt. Fix it before proceeding.
+- TEST_CHECK_BASE FAIL + git apply OK → a test broke an upstream test. Identify and fix.
+- TEST_CHECK_NEW PASS → challenge tests pass without a solution. Fix tests before proceeding.
 If RESULT is PASS → proceed to Step 03B (problem description audit) in the same or new chat.
 
 DO NOT produce solution.patch. This session ends after Docker verification passes.

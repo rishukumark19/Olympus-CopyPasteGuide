@@ -2,7 +2,18 @@ You are writing a solution patch for a Go Olympus challenge. Execute immediately
 
 **ISOLATION RULE — strictly enforced:** You must NOT read, open, or reference test.patch in this session. Solve this from problem.md and the repository ONLY. This mirrors exactly what a competing agent sees. If you have seen test.patch in an earlier step in this session, start a new session.
 
-**Automatic Navigation:** Use your shell/terminal to locate the challenge folder (e.g. `challenge/<slug>/`) inside the cloned repository and `cd` into it. Read `problem.md`, `repo_url.txt`, and `commit.txt` from that folder. The cloned repository itself is the parent — all patch and linting commands run from the repo root.
+**IMPLEMENTATION PLAN RULE — strictly enforced:** Before writing a single line of code, produce a written implementation plan covering: which files will be touched, what new types/fields/functions are needed, and how each problem.md clause maps to a code change. Only begin coding after this plan is clear. This prevents mid-implementation pivots that corrupt the patch.
+
+### Working Context
+<!-- Fill in BOTH fields before pasting -->
+REPO_LOCAL_PATH: [ABSOLUTE PATH TO CLONED REPO — e.g. C:\Users\you\repos\myrepo]
+CHALLENGE_SLUG:  [SLUG — the folder name inside challenge/ — e.g. least-latency-selection-policy]
+
+**Navigation:** Use your shell/terminal to run:
+```
+cd <REPO_LOCAL_PATH>
+```
+The challenge folder is at `challenge/<CHALLENGE_SLUG>/` inside this repo root. Read `problem.md`, `repo_url.txt`, and `commit.txt` from that subfolder. All patch and linting commands run from the repo root (`<REPO_LOCAL_PATH>`).
 
 ### Problem Description
 (read problem.md from the challenge folder)
@@ -38,13 +49,23 @@ Solution quality rules (S1-S4):
 - S3: No irrelevant changes — if unrelated to the task, leave it as-is
 - S4: No AI slop — no weird comments, unexplained defensive code, new coding patterns inconsistent with repo
 
-After writing solution.patch:
-- Run: go vet ./...
-- Run: gofmt -l . (no files should be listed)
-- Run: goimports -l . (no files should be listed)
-- Confirm no new golangci-lint errors over baseline
+After writing all implementation code:
+1. Run: `go build ./...` — must succeed with zero errors
+2. Run: `go vet ./...`
+3. Run: `gofmt -l .` (no files should be listed)
+4. Run: `goimports -l .` (no files should be listed)
+5. Run: `git apply --check challenge/<slug>/solution.patch` on a **clean** checkout to verify patch integrity before Docker.
 
-Meaningful LOC target: 300-500 meaningful LOC across 4+ existing non-test files and touch 2+ subsystems. Meaningful LOC excludes: blank lines, comment-only lines, imports, declarations without logic, braces, generated files, mechanical propagation. Do NOT pad to hit numbers — let the scope emerge from the requirements.
+**Patch generation — do it RIGHT:**
+```bash
+git add -p   # stage only solution files, NOT test files or Dockerfiles
+git diff --cached > challenge/<slug>/solution.patch
+# Then verify:
+git apply --check challenge/<slug>/solution.patch
+```
+Never generate a patch by hand-editing. Never include test files in solution.patch.
+
+Meaningful LOC target: 500+ meaningful LOC across 5+ existing non-test files touching 2+ subsystems. Meaningful LOC excludes: blank lines, comment-only lines, imports, declarations without logic, braces, generated files, mechanical propagation. Do NOT pad to hit numbers — let the scope emerge from the requirements.
 
 Generate solution.patch with: git diff --cached
 Confirm: git apply --check passes, no platform branding, no test code included.

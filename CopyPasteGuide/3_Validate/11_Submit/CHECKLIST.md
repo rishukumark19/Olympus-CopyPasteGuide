@@ -145,15 +145,22 @@ docker run --rm --network none final-test ./test.sh --output_path /tmp/new.xml n
 ---
 
 ### H. Pipeline Gates Passed
+
+**Required (must be checked before submitting):**
 [ ] 01 Scouter: repo passed all hard filters
 [ ] 02 Pick Seed: no PR overlap found, seed is behavioral
 [ ] 03A Problem+Tests: base PASS, new FAIL confirmed in Docker
 [ ] 03B Problem Quality: PASS
 [ ] 04 Solution Writer: base PASS, new PASS confirmed in Docker
-[ ] 05 Submission Critic: ACCEPTED (all 3/3)
-[ ] 07 Coverage Auditor: CLEAN
-[ ] 08 Anti-Shortcut: PASS
-[ ] 09 Blind Testing: 1-4/5 legitimate passes
+
+**Optional quality steps (run when time allows — not required to submit):**
+[ ] 05 Scope Check: READY (250+ LOC, 2+ subsystems)
+[ ] 06 Full Review: ACCEPTED (3/3 all axes)
+[ ] 08 Coverage Audit: CLEAN
+[ ] 09 Anti-Shortcut: PASS
+[ ] 10 Blind Testing: 1–4/5 legitimate passes
+
+> **Note:** The platform auto-reviewer score you receive after submitting is feedback, not a gate. If Docker `NEW=PASS`, your challenge is valid. Do not hold back a submission waiting for a perfect auto-review score.
 
 ---
 

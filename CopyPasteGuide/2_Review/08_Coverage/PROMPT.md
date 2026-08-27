@@ -1,6 +1,15 @@
 You are a test-coverage auditor for a Go Olympus challenge. Execute immediately. Do not edit files. Do not invent requirements. Do not ask questions. Find every valid missing behavioral test and return findings only — another agent will implement them.
 
-**Automatic Navigation:** Before reading any files, use your shell/terminal to list the contents of `challenge/` and `cd` into the correct challenge folder (the one containing `problem.md`, `test.patch`, `solution.patch`, and `Dockerfile`). Do NOT proceed if you are in the wrong directory.
+### Working Context
+<!-- Fill in BOTH fields before pasting -->
+REPO_LOCAL_PATH: [ABSOLUTE PATH TO CLONED REPO — e.g. C:\Users\you\repos\myrepo]
+CHALLENGE_SLUG:  [SLUG — the folder name inside challenge/ — e.g. least-latency-selection-policy]
+
+**Navigation:** Use your shell/terminal to run:
+```
+cd <REPO_LOCAL_PATH>/challenge/<CHALLENGE_SLUG>
+```
+Do NOT proceed if `problem.md`, `test.patch`, `solution.patch`, `repo_url.txt`, and `commit.txt` are not all present.
 
 ### Artifacts:
 

@@ -1,11 +1,13 @@
-# STEP 06 — Targeted Fixes
+# STEP 07 — Targeted Fixes
 #
-# You are here because Step 05 returned REVISION REQUESTED.
+# You are here because either:
+#   (A) 05_Scope_Check returned NEEDS REVISION  (scope/quality gate)
+#   (B) 06_Review returned REVISION REQUESTED   (full critic review)
 #
 # WHICH FILE TO USE:
-#   P score < 3/3 → 3_Fix_Problem.md   (problem.md repair)
-#   T score < 3/3 → 2_Fix_Tests.md     (test.patch repair)
-#   S score < 3/3 → 1_Fix_Solution.md  (solution.patch repair)
+#   P findings → 3_Fix_Problem.md   (problem.md repair)
+#   T findings → 2_Fix_Tests.md     (test.patch repair)
+#   S findings → 1_Fix_Solution.md  (solution.patch repair)
 #
 # IF MULTIPLE AXES FAIL — fix in this order:
 #   1. 1_Fix_Solution.md first  (solution bugs can mask test failures)
@@ -13,15 +15,20 @@
 #   3. 3_Fix_Problem.md last    (description is fastest to fix)
 #
 # THE WORKFLOW LOOP:
-#   1. Run `05_Review/PROMPT.md` in a NEW chat window/session. It will secretly save its findings to `review_findings.md`.
-#   2. Run `06_Fix/1, 2, 3` in a NEW chat window/session. They will automatically read `review_findings.md` and apply the fixes.
-#   3. Run `06_Fix/4_Docker_Matrix.md`. You MUST do this to verify the fixes actually compile and pass.
-#   4. If the Matrix fails, use `5_Fix_Compile.md` or manually fix the code.
-#   5. If the Matrix passes, go back to Step 1 (`05_Review/PROMPT.md` in a NEW window/session) to get a fresh review!
+#   After 05_Scope_Check NEEDS REVISION:
+#     → Run the relevant fix file(s) in a NEW chat
+#     → Run 4_Docker_Matrix.md to verify
+#     → Re-run 1_Build/05_Scope_Check/1_Check.md
 #
-# MAXIMUM CYCLES:
-#   Run this Review -> Fix -> Matrix loop a maximum of 3 times.
-#   If you are stuck in a loop after 3 cycles, stop the automated prompts and manually intervene, or go back to Step 02.
+#   After 06_Review REVISION REQUESTED:
+#     → Run `06_Review/PROMPT.md` in a NEW chat. It saves findings to `review_findings.md`.
+#     → Run `07_Fix/1, 2, 3` in a NEW chat. They auto-read `review_findings.md`.
+#     → Run `4_Docker_Matrix.md` to verify.
+#     → Re-run `06_Review/PROMPT.md` in a NEW chat.
+#
+# MAXIMUM CYCLES (06_Review loop):
+#   Run the Review -> Fix -> Docker loop a maximum of 3 times.
+#   If stuck after 3 cycles, manually intervene or go back to Step 02.
 
 ---
 

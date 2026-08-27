@@ -1,6 +1,17 @@
 You are fixing a test.patch for a Go Olympus challenge that fails Phase 1 of the Docker matrix with compilation errors. Execute immediately. Do not explain. Do not ask questions.
 
-Read `problem.md`, `test.patch`, and `solution.patch` from your current working directory.
+### Working Context
+<!-- Fill in BOTH fields before pasting -->
+REPO_LOCAL_PATH: [ABSOLUTE PATH TO CLONED REPO — e.g. C:\Users\you\repos\myrepo]
+CHALLENGE_SLUG:  [SLUG — the folder name inside challenge/ — e.g. least-latency-selection-policy]
+
+**Navigation:** Use your shell/terminal to run:
+```
+cd <REPO_LOCAL_PATH>/challenge/<CHALLENGE_SLUG>
+```
+Do NOT proceed if `problem.md`, `test.patch`, and `solution.patch` are not all present.
+
+Read `problem.md`, `test.patch`, and `solution.patch` from this directory.
 
 ### The Problem
 
