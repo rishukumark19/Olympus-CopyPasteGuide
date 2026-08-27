@@ -38,9 +38,12 @@
 
 ```bash
 # CLEAN checkout, no patches applied
+# WARNING: NEVER run `git clean -fd` without `-e challenge/` or it will delete all your work!
 git checkout <commit-hash>
-git apply test.patch
-docker build -t final-test .
+git reset --hard HEAD
+git clean -fd -e challenge/
+git apply challenge/<slug>/test.patch
+docker build -t final-test challenge/<slug>/
 docker run --rm --network none final-test ./test.sh --output_path /tmp/base.xml base   # MUST PASS
 docker run --rm --network none final-test ./test.sh --output_path /tmp/new.xml new    # MUST FAIL
 
