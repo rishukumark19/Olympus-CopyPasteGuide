@@ -61,7 +61,6 @@ Test rules (T1-T8):
 - T6: Offline — no network (container runs with --network none)
 - T7: No over-pinning exact output/error text unless contractually required
 - T8: Failure diagnostics intact — no catch-all messages hiding real failures
-- T9: Assert ONLY against public APIs and observable behavior. Do NOT test internal, private (lowercase) helper functions or enforce specific hidden algorithms.
 
 Test file naming: use `openssl rand -hex 3` suffix in filename (ending in _test.go).
 Do NOT include "challenge", "olympus", "shipd", "mars" anywhere in patches.
@@ -92,7 +91,7 @@ Rules for problem.md:
 - Natural maintainer issue prose: first sentence IS the request. No preamble.
 - No headings, no bullet requirement lists, no code blocks, no "currently missing" preamble.
 - Describe observable inputs, outputs, workflow effects, persistence/readback, ordering, errors, and edge cases.
-- Use public names ONLY when required for fairness. Do NOT name private helpers, internal files, storage keys, fixtures, or implementation types. Do NOT explicitly name high-level architecture components (e.g. "in Thanos Querier") if they are discoverable.
+- Use public names ONLY when required for fairness. Do NOT name private helpers, internal files, storage keys, fixtures, or implementation types.
 - Every clause must be tested or clearly repo-derivable.
 - No em-dashes (—). No hard-wrapped lines at ~70-85 chars. No wall-of-text AI tells.
 - Audit P1-P7 before finalizing:

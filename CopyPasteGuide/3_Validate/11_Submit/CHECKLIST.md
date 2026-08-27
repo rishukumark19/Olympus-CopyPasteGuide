@@ -190,6 +190,34 @@ ls -la test.sh   # should show -rwxr-xr-x
 
 ---
 
+### J. Common Platform Reviewer Flags (check before submitting)
+
+> These are the most frequent auto-reviewer errors/warnings. Scan your test.patch for each before submitting.
+
+**Syntax & Compilation**
+[ ] No syntax errors in test files (struct literals have colons: `Field: value,` not `Field value,`)
+[ ] All test files compile cleanly: `go build ./...` passes with test.patch applied
+
+**Test Assertion Quality**
+[ ] No tests call internal/unexported functions (e.g., no `privateHelper()` calls in tests)
+[ ] Assertions check observable output, NOT internal state or implementation strategy
+[ ] No `len(result) > 0` as the only assertion — must assert actual values
+[ ] No exact retry-count or exact internal call-count assertions (assert final behavior, not implementation path)
+
+**Multi-Store / Multi-Topology Tests**
+[ ] If problem.md mentions multiple stores or topologies, at least one test uses 2+ mock stores
+[ ] Mixed data tests assert BOTH newer-range (raw) AND older-range (downsampled) in merged result
+
+**problem.md Quality**
+[ ] No implementation details in problem.md (no component names like "Querier", "Store Gateway" unless necessary)
+[ ] No "rather than X" phrasing — state positive behavior only
+[ ] No internal function names or file names mentioned
+
+**Dockerfile**
+[ ] go.mod and go.sum are committed in the repo (not generated at build time)
+
+---
+
 ## IF ANYTHING IS RED:
 Fix it, re-run the relevant Docker checks, and re-run this checklist.
 Do NOT submit until every item is GREEN.
