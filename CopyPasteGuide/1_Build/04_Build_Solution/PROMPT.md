@@ -36,7 +36,7 @@ solution.patch contains implementation changes ONLY:
 - No whitespace-only hunks
 - No collateral edits outside the feature's scope
 
-Keep the implementation as short as possible while meeting requirements naturally.
+Implement ALL requirements from problem.md fully and completely. Do NOT artificially minimize the implementation — requirements that naturally need more code should get more code. Do NOT pad or add unnecessary code either.
 Follow repo conventions, ownership boundaries, types, errors, serialization, and command wiring.
 
 Every new public symbol, field, output, or persisted shape must map to at least one sentence in problem.md. If you cannot trace a change back to a clause in problem.md, remove it.
@@ -65,7 +65,7 @@ git apply --check challenge/<slug>/solution.patch
 ```
 Never generate a patch by hand-editing. Never include test files in solution.patch.
 
-Meaningful LOC target: 500+ meaningful LOC across 5+ existing non-test files touching 2+ subsystems. Meaningful LOC excludes: blank lines, comment-only lines, imports, declarations without logic, braces, generated files, mechanical propagation. Do NOT pad to hit numbers — let the scope emerge from the requirements.
+Meaningful LOC target: 300-500+ meaningful LOC across 3+ existing non-test files touching 2+ subsystems. Meaningful LOC excludes: blank lines, comment-only lines, imports, declarations without logic, braces, generated files, mechanical propagation. A solution below 250 meaningful LOC will be flagged for human review — if your implementation is naturally below this, it likely means the seed problem is too narrow and you should go back to Step 02 to pick a broader seed. Do NOT pad to hit numbers — but do implement the full feature scope.
 
 Generate solution.patch with: git diff --cached
 Confirm: git apply --check passes, no platform branding, no test code included.
