@@ -43,7 +43,7 @@ git checkout <commit-hash>
 git reset --hard HEAD
 git clean -fd -e challenge/
 git apply challenge/<slug>/test.patch
-docker build -t final-test challenge/<slug>/
+docker build -t final-test -f challenge/<slug>/Dockerfile .
 docker run --rm --network none final-test ./test.sh --output_path /tmp/base.xml base   # MUST PASS
 docker run --rm --network none final-test ./test.sh --output_path /tmp/new.xml new    # MUST FAIL
 
